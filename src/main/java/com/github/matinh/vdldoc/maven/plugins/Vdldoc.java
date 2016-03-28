@@ -1,4 +1,4 @@
-package at.co.xss.mh;
+package com.github.matinh.vdldoc.maven.plugins;
 
 /*
  * Copyright 2016 The Apache Software Foundation.
