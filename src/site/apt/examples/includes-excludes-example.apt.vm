@@ -1,0 +1,70 @@
+ ------
+ Basic Vdldoc Example
+ ------
+ Martin Höller
+ ------
+ 2016-03-16
+ ------
+
+Specifying taglib files via includes and excludes
+
+  Vdldoc Plugin searches the current project for JSF taglib-files. This search
+  can be influenced via <<<includes>>> and <<<excludes>>> patterns.
+
+* Inclusions
+
+  By default the Vdldoc Plugin will include all taglib descriptor files that
+  match the pattern <<<**/*.taglib.xml>>>.
+
+  If your taglib descriptor is named differently, configure Vdldoc Plugin and
+  specify the files you want to include.
+
+-------------------
+<project>
+  ...
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>${project.artifactId}</artifactId>
+        <version>${project.version}</version>
+        <configuration>
+          <includes>
+            <include>some-taglib.xml</include>
+            <include>**/other.taglib</include>
+          </includes>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  ...
+</project>
+-------------------
+
+* Excludes
+
+  To exclude certain taglib descriptors from beein processed, specify a suitable
+  pattern via the <<<excludes>>> property of the plugin. The default
+  <<<excludes>>> is <<<target/**>>>.
+
+-------------------
+<project>
+  ...
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>${project.artifactId}</artifactId>
+        <version>${project.version}</version>
+        <configuration>
+          <excludes>
+            <exlude>invalid.taglib.xml</include>
+            <exclude>**/not-processed/**</include>
+          </excludes>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  ...
+</project>
+-------------------

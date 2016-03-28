@@ -1,0 +1,38 @@
+ ------
+ Usage
+ ------
+ Martin Höller
+ ------
+ 2016-03-16
+ ------
+
+Usage
+
+ This plugin is used to generate JavaDoc style documentation for JSF tag
+ libraries! To generate documentation for all .taglib.xml files found in the
+ current project, declare it in your <<<pom.xml>>> as follows:
+
+-------------------
+<project>
+  ...
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>${project.artifactId}</artifactId>
+        <version>${project.version}</version>
+      </plugin>
+    </plugins>
+  </build>
+  ...
+</project>
+-------------------
+
+  To generate documentation execute
+
+---
+mvn vdldoc:vdldoc
+---
+
+  The generated documentation can be found in the projects build directory
+  (usually named <<<target>>>) in a newly created folder <<<vdldoc>>>.
