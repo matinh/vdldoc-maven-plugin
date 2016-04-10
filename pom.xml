@@ -7,19 +7,13 @@
   <version>1.0-SNAPSHOT</version>
   <packaging>maven-plugin</packaging>
 
-  <name>vdldoc-maven-plugin Maven Plugin</name>
+  <name>Vdldoc Maven Plugin</name>
   <description>
     The Vdldoc Plugin uses Vdldoc to generate Documentation for Facelet tags
     and JSF (composite) components.
   </description>
 
   <url>http://matinh.github.io/vdldoc-maven-plugin</url>
-
-  <scm>
-    <connection>scm:git:git://github.com/matinh/vdldoc-maven-plugin.git</connection>
-    <developerConnection>scm:git:git@github.com:matinh/vdldoc-maven-plugin.git</developerConnection>
-    <url>https://github.com/matinh/vdldoc-maven-plugin/tree/master</url>
-  </scm>
 
   <licenses>
     <license>
@@ -30,6 +24,17 @@
   </licenses>
 
   <inceptionYear>2016</inceptionYear>
+
+  <scm>
+    <connection>scm:git:git@github.com:matinh/vdldoc-maven-plugin.git</connection>
+    <developerConnection>scm:git:git@github.com:matinh/vdldoc-maven-plugin.git</developerConnection>
+    <url>https://github.com/matinh/vdldoc-maven-plugin</url>
+  </scm>
+
+  <issueManagement>
+    <system>GitHub</system>
+    <url>https://github.com/matinh/vdldoc-maven-plugin/issues</url>
+  </issueManagement>
 
   <developers>
     <developer>
