@@ -38,5 +38,8 @@
     <menu name="Examples">
       <item name="Includes and Excludes" href="examples/includes-excludes-example.html"/>
     </menu>
+
+    <menu ref="reports"/>
+
   </body>
 </project>

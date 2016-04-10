@@ -13,8 +13,13 @@
     and JSF (composite) components.
   </description>
 
-  <!-- FIXME change it to the project's website -->
-  <url>http://maven.apache.org</url>
+  <url>http://matinh.github.io/vdldoc-maven-plugin</url>
+
+  <scm>
+    <connection>scm:git:git://github.com/matinh/vdldoc-maven-plugin.git</connection>
+    <developerConnection>scm:git:git@github.com:matinh/vdldoc-maven-plugin.git</developerConnection>
+    <url>https://github.com/matinh/vdldoc-maven-plugin/tree/master</url>
+  </scm>
 
   <licenses>
     <license>
@@ -28,9 +33,10 @@
 
   <developers>
     <developer>
-      <id>mhoeller</id>
+      <id>matinh</id>
       <name>Martin Höller</name>
       <email>martin.hoeller@xss.co.at</email>
+      <url>https://github.com/matinh</url>
       <timezone>+1</timezone>
       <roles>
         <role>Lead Developer</role>

@@ -30,6 +30,9 @@ import java.util.List;
 
 /**
  * Generate documentation for JSF tag libraries via OmniFaces Vdldoc.
+ *
+ * @author martin
+ * @since 1.0-SNAPSHOT
  */
 @Mojo(name = "vdldoc", defaultPhase = LifecyclePhase.SITE, requiresProject = true)
 public class Vdldoc
