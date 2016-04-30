@@ -18,15 +18,21 @@ package com.github.matinh.vdldoc.maven.plugins;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugins.annotations.Execute;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
+import org.apache.maven.reporting.MavenReport;
+import org.apache.maven.reporting.MavenReportException;
+import org.codehaus.doxia.sink.Sink;
 import org.omnifaces.vdldoc.VdldocGenerator;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 /**
  * Generate documentation for JSF tag libraries via OmniFaces Vdldoc.
@@ -35,36 +41,54 @@ import java.util.List;
  * @since 1.0-SNAPSHOT
  */
 @Mojo(name = "vdldoc", defaultPhase = LifecyclePhase.SITE, requiresProject = true)
+@Execute(phase = LifecyclePhase.GENERATE_SOURCES)
 public class Vdldoc
     extends AbstractMojo
+    implements MavenReport
 {
-    /** Browser window title. */
+    /**
+     * Browser window title.
+     */
     @Parameter(defaultValue = "${project.name} VDL Documentation")
     private String browserTitle;
 
-    /** Documentation title. */
+    /**
+     * Documentation title.
+     */
     @Parameter(defaultValue = "${project.name} VDL Documentation")
     private String documentTitle;
 
-    /** If {@code false}, build will continue when generation of documentation fails. */
+    /**
+     * If {@code false}, build will continue when generation of documentation fails.
+     */
     @Parameter(defaultValue = "true", property = "maven.vdldoc.failOnError")
     private boolean failOnError;
 
-    /** Skip the generation of VDL documentation. */
+    /**
+     * Skip the generation of VDL documentation.
+     */
     @Parameter(defaultValue = "false", property = "maven.vdldoc.skip")
     private boolean skip;
 
-    /** Patterns to include when searching for taglib descriptor files. */
+    /**
+     * Patterns to include when searching for taglib descriptor files.
+     */
     @Parameter(defaultValue = "**/*.taglib.xml", property = "includes")
     private List<String> includes;
 
-    /** Patterns to exclude when searching for taglib descriptor files. */
+    /**
+     * Patterns to exclude when searching for taglib descriptor files.
+     */
     @Parameter(defaultValue = "target/**", property = "excludes")
     private List<String> excludes;
 
     /** Location of the output directory for the generated documentation. */
-    @Parameter(defaultValue = "${project.build.directory}/vdldoc", property = "maven.vdldoc.outputDirectory", required = false)
+    @Parameter(defaultValue = "${project.build.directory}", property = "maven.vdldoc.outputDirectory")
     private File outputDirectory;
+
+    // TODO documentation
+    @Parameter(defaultValue = "vdldoc", property = "maven.vdldoc.outputName")
+    private String outputName;
 
     @Parameter(defaultValue = "${project.basedir}", readonly = true)
     private File srcDirectory;
@@ -91,12 +115,83 @@ public class Vdldoc
         }
     }
 
+    public void generate(Sink sink, Locale locale) throws MavenReportException
+    {
+        if (skip) {
+            getLog().info("Skipping generation of Vdldoc.");
+            return;
+        }
+
+        try {
+            generateDocumentation();
+        }
+        catch (Exception e) {
+            if (failOnError)
+                throw new MavenReportException("Error generating Vdldoc!", e);
+
+            // log the failure and continue
+            getLog().warn("Failed to generate documentation: " + e.getLocalizedMessage());
+            getLog().debug(e);
+        }
+    }
+
+    public String getOutputName()
+    {
+        return outputName + File.pathSeparator + "index";
+    }
+
+    public String getCategoryName()
+    {
+        return CATEGORY_PROJECT_REPORTS;
+    }
+
+    public String getName(Locale locale)
+    {
+        return getBundle(locale).getString("report.vdldoc.name");
+    }
+
+    public String getDescription(Locale locale)
+    {
+        return getBundle(locale).getString("report.vdldoc.description");
+    }
+
+    public void setReportOutputDirectory(File file)
+    {
+        outputDirectory = file;
+    }
+
+    public File getReportOutputDirectory()
+    {
+        return outputDirectory;
+    }
+
+    public boolean isExternalReport()
+    {
+        return true;
+    }
+
+    public boolean canGenerateReport()
+    {
+        return true;
+    }
+
+    /**
+     * Gets the resource bundle for the specified locale.
+     *
+     * @param locale The locale of the currently generated report.
+     * @return The resource bundle for the requested locale.
+     */
+    private ResourceBundle getBundle(Locale locale)
+    {
+        return ResourceBundle.getBundle("vdldoc-report", locale, getClass().getClassLoader());
+    }
+
     private void generateDocumentation()
     {
         VdldocGenerator generator = new VdldocGenerator();
         generator.setWindowTitle(browserTitle);
         generator.setDocTitle(documentTitle);
-        generator.setOutputDirectory(outputDirectory);
+        generator.setOutputDirectory(new File(outputDirectory, outputName));
         // TODO add further support
 //        generator.setCssLocation("/uri/to/style.css"); // Optional (overrides default CSS).
 //        generator.setFacesConfig(new File("/path/to/faces-config.xml")); // Optional.
@@ -105,7 +200,7 @@ public class Vdldoc
         final List<String> taglibs = scanForTaglibs(srcDirectory, includes, excludes);
         getLog().debug("Found taglibs: " + taglibs);
         for (String taglib : taglibs) {
-            generator.addTaglib( new File(srcDirectory, taglib));
+            generator.addTaglib(new File(srcDirectory, taglib));
         }
 
         generator.generate();
