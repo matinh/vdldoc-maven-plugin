@@ -40,7 +40,7 @@ import java.util.ResourceBundle;
  * @author martin
  * @since 1.0-SNAPSHOT
  */
-@Mojo(name = "vdldoc", defaultPhase = LifecyclePhase.SITE, requiresProject = true)
+@Mojo(name = "vdldoc", defaultPhase = LifecyclePhase.SITE)
 @Execute(phase = LifecyclePhase.GENERATE_SOURCES)
 public class Vdldoc
     extends AbstractMojo
@@ -84,6 +84,8 @@ public class Vdldoc
 
     /**
      *  Location of the output directory for the generated report.
+     *  This configuration is only useful if you want the mojo to be executed
+     *  outside the maven-reporting-plugin.
      */
     @Parameter(defaultValue = "${project.reporting.outputDirectory}", property = "maven.vdldoc.outputDirectory")
     private File reportOutputDirectory;
