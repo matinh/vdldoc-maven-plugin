@@ -82,20 +82,24 @@ public class Vdldoc
     @Parameter(defaultValue = "target/**", property = "excludes")
     private List<String> excludes;
 
-    /** Location of the output directory for the generated documentation. */
-    @Parameter(defaultValue = "${project.build.directory}", property = "maven.vdldoc.outputDirectory")
-    private File outputDirectory;
+    /**
+     *  Location of the output directory for the generated report.
+     */
+    @Parameter(defaultValue = "${project.reporting.outputDirectory}", property = "maven.vdldoc.outputDirectory")
+    private File reportOutputDirectory;
 
-    // TODO documentation
-    @Parameter(defaultValue = "vdldoc", property = "maven.vdldoc.outputName")
-    private String outputName;
+    /**
+     * Name of the directory (inside the reporting-output-directory) into which
+     * Vdldoc will place the generated documentation.
+     */
+    @Parameter(defaultValue = "vdldoc", property = "maven.vdldoc.destDir")
+    private String destDir;
 
     @Parameter(defaultValue = "${project.basedir}", readonly = true)
     private File srcDirectory;
 
 
-    public void execute()
-        throws MojoExecutionException
+    public void execute() throws MojoExecutionException
     {
         if (skip) {
             getLog().info("Skipping generation of Vdldoc.");
@@ -117,27 +121,17 @@ public class Vdldoc
 
     public void generate(Sink sink, Locale locale) throws MavenReportException
     {
-        if (skip) {
-            getLog().info("Skipping generation of Vdldoc.");
-            return;
-        }
-
         try {
-            generateDocumentation();
+            execute();
         }
-        catch (Exception e) {
-            if (failOnError)
-                throw new MavenReportException("Error generating Vdldoc!", e);
-
-            // log the failure and continue
-            getLog().warn("Failed to generate documentation: " + e.getLocalizedMessage());
-            getLog().debug(e);
+        catch (MojoExecutionException e) {
+            throw new MavenReportException(e.getMessage(), (Exception) e.getCause());
         }
     }
 
     public String getOutputName()
     {
-        return outputName + File.pathSeparator + "index";
+        return destDir + File.separator + "index";
     }
 
     public String getCategoryName()
@@ -157,12 +151,12 @@ public class Vdldoc
 
     public void setReportOutputDirectory(File file)
     {
-        outputDirectory = file;
+        reportOutputDirectory = file;
     }
 
     public File getReportOutputDirectory()
     {
-        return outputDirectory;
+        return reportOutputDirectory;
     }
 
     public boolean isExternalReport()
@@ -191,7 +185,7 @@ public class Vdldoc
         VdldocGenerator generator = new VdldocGenerator();
         generator.setWindowTitle(browserTitle);
         generator.setDocTitle(documentTitle);
-        generator.setOutputDirectory(new File(outputDirectory, outputName));
+        generator.setOutputDirectory(new File(reportOutputDirectory, destDir));
         // TODO add further support
 //        generator.setCssLocation("/uri/to/style.css"); // Optional (overrides default CSS).
 //        generator.setFacesConfig(new File("/path/to/faces-config.xml")); // Optional.
