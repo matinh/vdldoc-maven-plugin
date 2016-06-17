@@ -28,5 +28,15 @@
         </p>
       </answer>
     </faq>
+
+    <faq id="other-plugins">
+      <question>Are there other plugins to achieve this?</question>
+      <answer>
+        When starting this project, I couldn't find any other plugin. However,
+        once this plugin was ready to use and published, someone noticed me
+        about <a href="https://bitbucket.org/jyeary/vdldoc-maven-plugin">
+        another vdldoc-maven-plugin</a>.
+      </answer>
+    </faq>
   </part>
 </faqs>
