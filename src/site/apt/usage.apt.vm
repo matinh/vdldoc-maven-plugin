@@ -9,8 +9,45 @@
 Usage
 
  This plugin is used to generate JavaDoc style documentation for JSF tag
- libraries! To generate documentation for all .taglib.xml files found in the
- current project, declare it in your <<<pom.xml>>> as follows:
+ libraries! It uses {{{http://vdldoc.omnifaces.org/}OmniFaces Vdldoc}} for this
+ job. To generate documentation for all .taglib.xml files found in the
+ current project, you have two possibilities.
+
+* Generate Vdldocs As Part Of Project Reports
+
+ Declare the plugin in your <<<pom.xml>>> as follows:
+
+-------------------
+<project>
+  ...
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>${project.artifactId}</artifactId>
+        <version>${project.version}</version>
+      </plugin>
+    </plugins>
+  </reporting>
+  ...
+</project>
+-------------------
+
+ To generate the site including the documentation execute
+
+---
+mvn site
+---
+
+ The generated report will be included in the site and a link to it will be
+ created.
+
+
+* Generate Standalong Vdldocs
+
+ To execute only the Vdldoc generation standalong, declare the plugin in your
+ <<<pom.xml>>> in the <<<build>>> section instead of the <<<reporting>>>
+ section:
 
 -------------------
 <project>
@@ -28,11 +65,11 @@ Usage
 </project>
 -------------------
 
-  To generate documentation execute
+ And execute the command
 
 ---
 mvn vdldoc:vdldoc
 ---
 
   The generated documentation can be found in the projects build directory
-  (usually named <<<target>>>) in a newly created folder <<<vdldoc>>>.
+  (usually named <<<target>>>) in a newly created folder <<<site/vdldoc>>>.

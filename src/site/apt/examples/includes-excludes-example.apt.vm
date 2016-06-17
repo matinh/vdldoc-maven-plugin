@@ -22,7 +22,7 @@ Specifying taglib files via includes and excludes
 -------------------
 <project>
   ...
-  <build>
+  <reporting>
     <plugins>
       <plugin>
         <groupId>${project.groupId}</groupId>
@@ -36,21 +36,21 @@ Specifying taglib files via includes and excludes
         </configuration>
       </plugin>
     </plugins>
-  </build>
+  </reporting>
   ...
 </project>
 -------------------
 
 * Excludes
 
-  To exclude certain taglib descriptors from beein processed, specify a suitable
+  To exclude certain taglib descriptors from being processed, specify a suitable
   pattern via the <<<excludes>>> property of the plugin. The default
   <<<excludes>>> is <<<target/**>>>.
 
 -------------------
 <project>
   ...
-  <build>
+  <reporting>
     <plugins>
       <plugin>
         <groupId>${project.groupId}</groupId>
@@ -64,7 +64,7 @@ Specifying taglib files via includes and excludes
         </configuration>
       </plugin>
     </plugins>
-  </build>
+  </reporting>
   ...
 </project>
 -------------------

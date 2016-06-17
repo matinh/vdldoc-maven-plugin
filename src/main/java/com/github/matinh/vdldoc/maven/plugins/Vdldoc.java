@@ -38,7 +38,7 @@ import java.util.ResourceBundle;
  * Generate documentation for JSF tag libraries via OmniFaces Vdldoc.
  *
  * @author martin
- * @since 1.0-SNAPSHOT
+ * @since 1.0-alpha-1
  */
 @Mojo(name = "vdldoc", defaultPhase = LifecyclePhase.SITE)
 @Execute(phase = LifecyclePhase.GENERATE_SOURCES)
@@ -83,9 +83,9 @@ public class Vdldoc
     private List<String> excludes;
 
     /**
-     *  Location of the output directory for the generated report.
-     *  This configuration is only useful if you want the mojo to be executed
-     *  outside the maven-reporting-plugin.
+     * Location of the output directory for the generated report.
+     * This configuration is usually only useful if you call the mojo directly
+     * from the command-line.
      */
     @Parameter(defaultValue = "${project.reporting.outputDirectory}", property = "maven.vdldoc.outputDirectory")
     private File reportOutputDirectory;
