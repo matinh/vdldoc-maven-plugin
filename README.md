@@ -1,3 +1,5 @@
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.matinh.vdldoc/vdldoc-maven-plugin/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.matinh.vdldoc/vdldoc-maven-plugin)
+
 # Vdldoc Maven Plugin
 
 *Vdldoc Maven Plugin* is a plugin for [Apache Maven](http://maven.apache.org/)
