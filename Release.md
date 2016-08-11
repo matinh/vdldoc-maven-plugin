@@ -15,5 +15,6 @@
 * Generate documentation: `mvn clean site`
 * Sync it to some local directory that holds the `gh-pages` branch:
   `rsync --delete --exclude .git --exclude .gitignore -vaz target/site/ .../vdldoc-maven-plugin.gh-pages/`
+* add new files with `git add` if necessary
 * commit the changes: `git commit -m"updated documentation for 1.0"`
 * push changes to github: `git push`
