@@ -37,6 +37,7 @@
 
     <menu name="Examples">
       <item name="Includes and Excludes" href="examples/includes-excludes-example.html"/>
+      <item name="Custom CSS files" href="examples/css.html"/>
     </menu>
 
     <menu ref="reports"/>

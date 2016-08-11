@@ -43,3 +43,5 @@ Vdldoc Maven Plugin
   you can take a look at the following examples:
 
   * {{{./examples/includes-excludes-example.html}Specifying taglib files via includes and excludes}}
+
+  * {{{./examples/css.html}Use custom CSS files for generated documentation}}

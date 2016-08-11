@@ -1,0 +1,68 @@
+ ------
+ Vdldoc Example with custom CSS file
+ ------
+ Martin Höller
+ ------
+ 2016-08-11
+ ------
+
+Specifying a custom CSS file for the generated documentation
+
+  Vdldoc support settings a custom CSS file (or URI) to include in the generated
+  documentation. This can also be done via this plugin by specifying the
+  css-file in the configuration.
+
+  If a custom file is used, this should be copied to the vdldoc output,
+  for example via the <<<maven-resources-plugin>>>. In the given example we
+  keep the CSS file in <<<src/main/vdldoc-resources>>> and name it
+  <<<vdldoc.css>>>.
+
+-------------------
+<project>
+  ...
+  <properties>
+    <vdldoc.output.directory>${project.reporting.outputDirectory}/vdldoc</vdldoc.output.directory>
+  </properties>
+  ...
+  <build>
+    <plugins>
+      <!-- Copy the Vdldoc static resources -->
+      <plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>copy-vdldoc-resources</id>
+            <phase>pre-site</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${vdldoc.output.directory}</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>src/main/vdldoc-resources</directory>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>${project.artifactId}</artifactId>
+        <version>${project.version}</version>
+        <configuration>
+          <css>${vdldoc.output.directory}/vdldoc.css</css>
+        </configuration>
+      </plugin>
+    </plugins>
+  </reporting>
+
+</project>
+-------------------
+
