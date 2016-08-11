@@ -2,4 +2,12 @@
 
 * Run integration-tests with `mvn -Prun-its clean install`
 * Update version information with `mvn versions:set -DnewVersion=x.y`
-* Commit the changes in `pom.xml`: git commit
+* Commit the changes in `pom.xml`: `git commit -a -m"prepare for x.y release`
+* Tag the release `git tag x.y` and push changes to github: `git push origin --tags`
+* Perform the release and upload it to maven central: `mvn -Prelease deploy` 
+* Update version information for development: `mvn versions:set -DnewVersion=1.1-SNAPSHOT`
+* Commit the changes in `pom.xml`: `git commit -a -m"prepare for SNAPSHOT development`
+
+# Update the plugin's homepage
+
+
