@@ -12,7 +12,7 @@
 
 # Update the plugin's homepage
 
-* Generate documentation: `mvn clean site`
+* Generate documentation: `mvn -Preporting clean site`
 * Sync it to some local directory that holds the `gh-pages` branch:
   `rsync --delete --exclude .git --exclude .gitignore -vaz target/site/ .../vdldoc-maven-plugin.gh-pages/`
 * add new files with `git add` if necessary
