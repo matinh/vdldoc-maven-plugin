@@ -38,5 +38,14 @@
         another vdldoc-maven-plugin</a>.
       </answer>
     </faq>
+
+    <faq id="aggregation-support">
+      <question>Is there support for aggregating reports in a multi-module project?</question>
+      <answer>
+        There is currently no support for aggregating multiple Vdldoc reports in
+        a maven multi-module project. If you need this, create a patch and send
+        me a pull-request.
+      </answer>
+    </faq>
   </part>
 </faqs>
