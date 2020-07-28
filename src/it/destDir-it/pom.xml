@@ -23,6 +23,12 @@
           <destDir>myDest</destDir>
         </configuration>
       </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-project-info-reports-plugin</artifactId>
+        <version>2.9</version>
+      </plugin>
     </plugins>
   </reporting>
 </project>
