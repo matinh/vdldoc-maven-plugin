@@ -122,7 +122,7 @@
     <dependency>
       <groupId>org.omnifaces</groupId>
       <artifactId>vdldoc</artifactId>
-      <version>2.1</version>
+      <version>3.0</version>
     </dependency>
 
     <!-- test-scoped dependencies -->

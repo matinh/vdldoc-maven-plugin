@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<facelet-taglib version="2.3"
+                xmlns="https://jakarta.ee/xml/ns/jakartaee"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-facelettaglibrary_2_3.xsd">
+
+  <description>Test Library</description>
+  <namespace>http://com.github.matinh/foo</namespace>
+  <short-name>foo</short-name>
+
+  <tag>
+    <description>Some tag</description>
+    <tag-name>bar</tag-name>
+    <source>bar.xhtml</source>
+  </tag>
+
+</facelet-taglib>
