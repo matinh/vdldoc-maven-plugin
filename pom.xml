@@ -148,7 +148,13 @@
       <plugins>
 
         <plugin>
+          <artifactId>maven-clean-plugin</artifactId>
+          <version>3.1.0</version>
+        </plugin>
+
+        <plugin>
           <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.8.1</version>
           <configuration>
             <source>1.6</source>
             <target>1.6</target>
@@ -156,8 +162,33 @@
         </plugin>
 
         <plugin>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>3.1.0</version>
+        </plugin>
+
+        <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
           <version>2.22.2</version>
+        </plugin>
+
+        <plugin>
+          <artifactId>maven-surefire-report-plugin</artifactId>
+          <version>2.22.2</version>
+        </plugin>
+
+        <plugin>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>3.2.0</version>
+        </plugin>
+
+        <plugin>
+          <artifactId>maven-install-plugin</artifactId>
+          <version>3.0.0-M1</version>
+        </plugin>
+
+        <plugin>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>3.0.0-M1</version>
         </plugin>
 
         <plugin>
@@ -194,7 +225,7 @@
 
         <plugin>
           <artifactId>maven-pmd-plugin</artifactId>
-          <version>3.7</version>
+          <version>3.13.0</version>
           <configuration>
             <printFailingErrors>true</printFailingErrors>
             <excludeRoots>target</excludeRoots>
@@ -225,7 +256,7 @@
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>findbugs-maven-plugin</artifactId>
-          <version>3.0.4</version>
+          <version>3.0.5</version>
           <configuration>
             <xmlOutput>true</xmlOutput>
             <xmlOutputDirectory>${project.build.directory}/findbugs</xmlOutputDirectory>
@@ -259,7 +290,7 @@
     <plugins>
       <plugin>
         <artifactId>maven-plugin-plugin</artifactId>
-        <version>3.4</version>
+        <version>3.6.0</version>
         <configuration>
           <goalPrefix>vdldoc</goalPrefix>
           <skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
@@ -294,7 +325,7 @@
       <plugin>
         <groupId>org.sonatype.plugins</groupId>
         <artifactId>nexus-staging-maven-plugin</artifactId>
-        <version>1.6.3</version>
+        <version>1.6.8</version>
         <extensions>true</extensions>
         <configuration>
           <serverId>ossrh</serverId>
@@ -410,7 +441,7 @@
 
           <plugin>
             <artifactId>maven-jxr-plugin</artifactId>
-            <version>2.5</version>
+            <version>3.0.0</version>
             <reportSets>
               <reportSet>
                 <id>aggregate</id>
@@ -481,7 +512,7 @@
         <plugins>
           <plugin>
             <artifactId>maven-invoker-plugin</artifactId>
-            <version>1.7</version>
+            <version>3.2.1</version>
             <configuration>
               <debug>true</debug>
               <cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>
@@ -519,7 +550,7 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-source-plugin</artifactId>
-            <version>3.0.0</version>
+            <version>3.2.1</version>
             <executions>
               <execution>
                 <id>attach-sources</id>
