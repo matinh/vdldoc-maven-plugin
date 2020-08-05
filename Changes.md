@@ -1,6 +1,8 @@
 # Changelog
 
-* 2.0 (to be released)
+* 2.1 (to be released)
+
+* 2.0 (Release on 2020-08-03)
   - Updated most maven plugins and some dependencies to recent versions
   - Updated Vdldoc to 3.0 
 
