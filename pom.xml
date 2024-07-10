@@ -131,13 +131,13 @@
     <dependency>
       <groupId>org.codehaus.plexus</groupId>
       <artifactId>plexus-utils</artifactId>
-      <version>3.3.0</version>
+      <version>4.0.1</version>
     </dependency>
 
     <dependency>
       <groupId>org.omnifaces</groupId>
       <artifactId>vdldoc</artifactId>
-      <version>3.0</version>
+      <version>3.2</version>
     </dependency>
 
     <!-- test-scoped dependencies -->
@@ -145,14 +145,14 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.13.1</version>
+      <version>4.13.2</version>
       <scope>test</scope>
     </dependency>
 
     <dependency>
       <groupId>org.easymock</groupId>
       <artifactId>easymock</artifactId>
-      <version>4.2</version>
+      <version>5.3.0</version>
       <scope>test</scope>
     </dependency>
 
