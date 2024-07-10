@@ -298,7 +298,7 @@ public class Vdldoc
     private List<String> scanForTaglibs(final File basedir,
         final List<String> includeList, final List<String> excludeList)
     {
-        List<String> result = new ArrayList<String>();
+        List<String> result = new ArrayList<>();
         if (basedir != null && basedir.exists()) {
             org.codehaus.plexus.util.DirectoryScanner scanner =
                 new org.codehaus.plexus.util.DirectoryScanner();
@@ -322,10 +322,9 @@ public class Vdldoc
     // based on maven-surefire-plugin's DirectoryScanner
     private static String[] processIncludesExcludes(final List<String> list)
     {
-        List<String> newList = new ArrayList<String>();
-        for (Object aList : list) {
-            String include = (String) aList;
-            String[] includes = include.split(",");
+        List<String> newList = new ArrayList<>();
+        for (String aList : list) {
+            String[] includes = aList.split(",");
             Collections.addAll(newList, includes);
         }
 
