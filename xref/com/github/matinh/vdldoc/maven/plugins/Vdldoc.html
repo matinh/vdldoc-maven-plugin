@@ -306,7 +306,7 @@
 <a class="jxr_linenumber" name="L298" href="#L298">298</a>     <strong class="jxr_keyword">private</strong> List&lt;String&gt; scanForTaglibs(<strong class="jxr_keyword">final</strong> File basedir,
 <a class="jxr_linenumber" name="L299" href="#L299">299</a>         <strong class="jxr_keyword">final</strong> List&lt;String&gt; includeList, <strong class="jxr_keyword">final</strong> List&lt;String&gt; excludeList)
 <a class="jxr_linenumber" name="L300" href="#L300">300</a>     {
-<a class="jxr_linenumber" name="L301" href="#L301">301</a>         List&lt;String&gt; result = <strong class="jxr_keyword">new</strong> ArrayList&lt;String&gt;();
+<a class="jxr_linenumber" name="L301" href="#L301">301</a>         List&lt;String&gt; result = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
 <a class="jxr_linenumber" name="L302" href="#L302">302</a>         <strong class="jxr_keyword">if</strong> (basedir != <strong class="jxr_keyword">null</strong> &amp;&amp; basedir.exists()) {
 <a class="jxr_linenumber" name="L303" href="#L303">303</a>             org.codehaus.plexus.util.DirectoryScanner scanner =
 <a class="jxr_linenumber" name="L304" href="#L304">304</a>                 <strong class="jxr_keyword">new</strong> org.codehaus.plexus.util.DirectoryScanner();
@@ -330,23 +330,22 @@
 <a class="jxr_linenumber" name="L322" href="#L322">322</a>     <em class="jxr_comment">// based on maven-surefire-plugin's DirectoryScanner</em>
 <a class="jxr_linenumber" name="L323" href="#L323">323</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> String[] processIncludesExcludes(<strong class="jxr_keyword">final</strong> List&lt;String&gt; list)
 <a class="jxr_linenumber" name="L324" href="#L324">324</a>     {
-<a class="jxr_linenumber" name="L325" href="#L325">325</a>         List&lt;String&gt; newList = <strong class="jxr_keyword">new</strong> ArrayList&lt;String&gt;();
-<a class="jxr_linenumber" name="L326" href="#L326">326</a>         <strong class="jxr_keyword">for</strong> (Object aList : list) {
-<a class="jxr_linenumber" name="L327" href="#L327">327</a>             String include = (String) aList;
-<a class="jxr_linenumber" name="L328" href="#L328">328</a>             String[] includes = include.split(<span class="jxr_string">","</span>);
-<a class="jxr_linenumber" name="L329" href="#L329">329</a>             Collections.addAll(newList, includes);
-<a class="jxr_linenumber" name="L330" href="#L330">330</a>         }
-<a class="jxr_linenumber" name="L331" href="#L331">331</a> 
-<a class="jxr_linenumber" name="L332" href="#L332">332</a>         String[] incs = <strong class="jxr_keyword">new</strong> String[newList.size()];
-<a class="jxr_linenumber" name="L333" href="#L333">333</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; incs.length; i++) {
-<a class="jxr_linenumber" name="L334" href="#L334">334</a>             incs[i] = newList.get(i);
-<a class="jxr_linenumber" name="L335" href="#L335">335</a>         }
-<a class="jxr_linenumber" name="L336" href="#L336">336</a> 
-<a class="jxr_linenumber" name="L337" href="#L337">337</a>         <strong class="jxr_keyword">return</strong> incs;
-<a class="jxr_linenumber" name="L338" href="#L338">338</a>     }
-<a class="jxr_linenumber" name="L339" href="#L339">339</a> }
+<a class="jxr_linenumber" name="L325" href="#L325">325</a>         List&lt;String&gt; newList = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
+<a class="jxr_linenumber" name="L326" href="#L326">326</a>         <strong class="jxr_keyword">for</strong> (String aList : list) {
+<a class="jxr_linenumber" name="L327" href="#L327">327</a>             String[] includes = aList.split(<span class="jxr_string">","</span>);
+<a class="jxr_linenumber" name="L328" href="#L328">328</a>             Collections.addAll(newList, includes);
+<a class="jxr_linenumber" name="L329" href="#L329">329</a>         }
+<a class="jxr_linenumber" name="L330" href="#L330">330</a> 
+<a class="jxr_linenumber" name="L331" href="#L331">331</a>         String[] incs = <strong class="jxr_keyword">new</strong> String[newList.size()];
+<a class="jxr_linenumber" name="L332" href="#L332">332</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; incs.length; i++) {
+<a class="jxr_linenumber" name="L333" href="#L333">333</a>             incs[i] = newList.get(i);
+<a class="jxr_linenumber" name="L334" href="#L334">334</a>         }
+<a class="jxr_linenumber" name="L335" href="#L335">335</a> 
+<a class="jxr_linenumber" name="L336" href="#L336">336</a>         <strong class="jxr_keyword">return</strong> incs;
+<a class="jxr_linenumber" name="L337" href="#L337">337</a>     }
+<a class="jxr_linenumber" name="L338" href="#L338">338</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2016&#x2013;2020. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2016&#x2013;2024. All rights reserved.</div>
 </body>
 </html>

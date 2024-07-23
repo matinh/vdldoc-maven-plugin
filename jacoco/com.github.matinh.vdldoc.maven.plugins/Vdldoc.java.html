@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Vdldoc.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Vdldoc Maven Plugin</a> &gt; <a href="index.source.html" class="el_package">com.github.matinh.vdldoc.maven.plugins</a> &gt; <span class="el_source">Vdldoc.java</span></div><h1>Vdldoc.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2016-2017 The Apache Software Foundation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.github.matinh.vdldoc.maven.plugins;
+
+import org.apache.maven.plugin.AbstractMojo;
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugins.annotations.Execute;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
+import org.apache.maven.reporting.MavenReport;
+import org.apache.maven.reporting.MavenReportException;
+import org.codehaus.doxia.sink.Sink;
+import org.codehaus.plexus.util.StringUtils;
+import org.omnifaces.vdldoc.VdldocGenerator;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
+
+/**
+ * Generate documentation for JSF tag libraries via OmniFaces Vdldoc.
+ *
+ * @author martin
+ * @since 1.0-alpha-1
+ */
+@Mojo(name = &quot;vdldoc&quot;, defaultPhase = LifecyclePhase.SITE)
+@Execute(phase = LifecyclePhase.GENERATE_SOURCES)
+<span class="fc" id="L46">public class Vdldoc</span>
+    extends AbstractMojo
+    implements MavenReport
+{
+    /**
+     * Browser window title.
+     */
+    @Parameter(defaultValue = &quot;${project.name} VDL Documentation&quot;)
+    private String browserTitle;
+
+    /**
+     * Documentation title.
+     */
+    @Parameter(defaultValue = &quot;${project.name} VDL Documentation&quot;)
+    private String documentTitle;
+
+    /**
+     * If {@code false}, build will continue when generation of documentation
+     * fails.
+     */
+    // we initialize to default value here for unit testing.
+<span class="fc" id="L67">    @Parameter(defaultValue = &quot;true&quot;, property = &quot;maven.vdldoc.failOnError&quot;)</span>
+    private boolean failOnError = true;
+
+    /**
+     * Skip the generation of VDL documentation.
+     */
+    @Parameter(defaultValue = &quot;false&quot;, property = &quot;maven.vdldoc.skip&quot;)
+    private boolean skip;
+
+    /**
+     * Patterns to include when searching for taglib descriptor files.
+     */
+    @Parameter(defaultValue = &quot;**/*.taglib.xml&quot;,
+        property = &quot;maven.vdldoc.includes&quot;)
+    private List&lt;String&gt; includes;
+
+    /**
+     * Patterns to exclude when searching for taglib descriptor files.
+     */
+    @Parameter(defaultValue = &quot;target/**&quot;, property = &quot;maven.vdldoc.excludes&quot;)
+    private List&lt;String&gt; excludes;
+
+    /**
+     * Location of the output directory for the generated report.
+     * This configuration is usually only useful if you call the mojo directly
+     * from the command-line.
+     */
+    @Parameter(defaultValue = &quot;${project.reporting.outputDirectory}&quot;,
+        property = &quot;maven.vdldoc.outputDirectory&quot;)
+    private File reportOutputDirectory;
+
+    /**
+     * Name of the directory (inside the reporting-output-directory) into which
+     * Vdldoc will place the generated documentation.
+     */
+    // we initialize to default value here for unit testing.
+<span class="fc" id="L103">    @Parameter(defaultValue = &quot;vdldoc&quot;, property = &quot;maven.vdldoc.destDir&quot;)</span>
+    private String destDir = &quot;vdldoc&quot;;
+
+    /**
+     * URI of the CSS file. This defaults to Vdldocs internal CSS.
+     * @since 1.0
+     */
+    @Parameter(property = &quot;maven.vdldoc.css&quot;)
+    private String css;
+
+    /**
+     * Path to the faces-config.xml file.
+     * @since 1.0
+     */
+    @Parameter(property = &quot;maven.vdldoc.facesConfig&quot;)
+    private String facesConfig;
+
+    /**
+     * Path to properties file containing descriptions for implied attributes
+     * of composite components, such as 'id', 'rendered', etc.
+     * @since 1.0
+     */
+    @Parameter(property = &quot;maven.vdldoc.attributesFile&quot;)
+    private String attributesFile;
+
+    /**
+     * Hide the &quot;output generated by&quot; footer.
+     * @since 1.0
+     */
+    @Parameter(defaultValue = &quot;false&quot;,
+        property = &quot;maven.vdldoc.hideGeneratedBy&quot;)
+    private boolean hideGeneratedBy;
+
+
+    // ============ end of writable mojo parameters ===========
+
+    /**
+     * The directory to scan for taglib files.
+     */
+    @Parameter(defaultValue = &quot;${project.basedir}&quot;, readonly = true)
+    private File srcDirectory;
+
+    /**
+     * The documentation generator to use.
+     */
+<span class="fc" id="L148">    private VdldocGenerator generator = new VdldocGenerator();</span>
+
+
+    /**
+     * Set the generator to use for documentation generation.
+     * &lt;p&gt;
+     * This method is meant for unit tests only.
+     * &lt;/p&gt;
+     * @param gen The generator to use. Must not be {@code null}.
+     */
+    void setGenerator(final VdldocGenerator gen)
+    {
+<span class="fc" id="L160">        this.generator = gen;</span>
+<span class="fc" id="L161">    }</span>
+
+    @Override
+    public void execute() throws MojoExecutionException
+    {
+<span class="pc bpc" id="L166" title="1 of 2 branches missed.">        if (skip) {</span>
+<span class="nc" id="L167">            getLog().info(&quot;Skipping generation of Vdldoc.&quot;);</span>
+<span class="nc" id="L168">            return;</span>
+        }
+
+        try {
+<span class="fc" id="L172">            generateDocumentation();</span>
+<span class="fc" id="L173">        } catch (Exception e) {</span>
+<span class="pc bpc" id="L174" title="1 of 2 branches missed.">            if (failOnError) {</span>
+<span class="fc" id="L175">                throw new MojoExecutionException(&quot;Error generating Vdldoc!&quot;, e);</span>
+            }
+
+            // log the failure and continue
+<span class="nc bnc" id="L179" title="All 2 branches missed.">            final String reason = e.getLocalizedMessage() == null</span>
+<span class="nc" id="L180">                ? e.toString() : e.getLocalizedMessage();</span>
+<span class="nc" id="L181">            getLog().warn(&quot;Failed to generate documentation: &quot;</span>
+                + reason);
+<span class="nc" id="L183">            getLog().debug(e);</span>
+<span class="fc" id="L184">        }</span>
+<span class="fc" id="L185">    }</span>
+
+    @SuppressWarnings(&quot;deprecation&quot;)
+    @Override
+    public void generate(final Sink sink, final Locale locale)
+        throws MavenReportException
+    {
+        try {
+<span class="fc" id="L193">            execute();</span>
+<span class="fc" id="L194">        } catch (MojoExecutionException e) {</span>
+<span class="fc" id="L195">            throw new MavenReportException(e.getMessage(),</span>
+<span class="fc" id="L196">                (Exception) e.getCause());</span>
+<span class="fc" id="L197">        }</span>
+<span class="fc" id="L198">    }</span>
+
+    @Override
+    public String getOutputName()
+    {
+<span class="fc" id="L203">        return destDir + File.separator + &quot;index&quot;;</span>
+    }
+
+    @Override
+    public String getCategoryName()
+    {
+<span class="fc" id="L209">        return CATEGORY_PROJECT_REPORTS;</span>
+    }
+
+    @Override
+    public String getName(final Locale locale)
+    {
+<span class="fc" id="L215">        return getBundle(locale).getString(&quot;report.vdldoc.name&quot;);</span>
+    }
+
+    @Override
+    public String getDescription(final Locale locale)
+    {
+<span class="fc" id="L221">        return getBundle(locale).getString(&quot;report.vdldoc.description&quot;);</span>
+    }
+
+    @Override
+    public void setReportOutputDirectory(final File file)
+    {
+<span class="fc" id="L227">        reportOutputDirectory = file;</span>
+<span class="fc" id="L228">    }</span>
+
+    @Override
+    public File getReportOutputDirectory()
+    {
+<span class="fc" id="L233">        return reportOutputDirectory;</span>
+    }
+
+    @Override
+    public boolean isExternalReport()
+    {
+<span class="fc" id="L239">        return true;</span>
+    }
+
+    @Override
+    public boolean canGenerateReport()
+    {
+<span class="fc" id="L245">        return true;</span>
+    }
+
+    /**
+     * Gets the resource bundle for the specified locale.
+     *
+     * @param locale The locale of the currently generated report.
+     * @return The resource bundle for the requested locale.
+     */
+    private ResourceBundle getBundle(final Locale locale)
+    {
+<span class="fc" id="L256">        return ResourceBundle.getBundle(</span>
+<span class="fc" id="L257">            &quot;vdldoc-report&quot;, locale, getClass().getClassLoader());</span>
+    }
+
+    private void generateDocumentation()
+    {
+<span class="fc" id="L262">        generator.setWindowTitle(browserTitle);</span>
+<span class="fc" id="L263">        generator.setDocTitle(documentTitle);</span>
+<span class="fc" id="L264">        generator.setOutputDirectory(new File(reportOutputDirectory, destDir));</span>
+
+<span class="pc bpc" id="L266" title="1 of 2 branches missed.">        if (!StringUtils.isEmpty(css)) {</span>
+<span class="nc" id="L267">            getLog().debug(&quot;Using CSS file &quot; + css);</span>
+<span class="nc" id="L268">            generator.setCssLocation(css);</span>
+        }
+
+<span class="pc bpc" id="L271" title="1 of 2 branches missed.">        if (!StringUtils.isEmpty(facesConfig)) {</span>
+<span class="nc" id="L272">            getLog().debug(&quot;Using faces-config file &quot;</span>
+                + facesConfig);
+<span class="nc" id="L274">            generator.setFacesConfig(new File(facesConfig));</span>
+        }
+<span class="pc bpc" id="L276" title="1 of 2 branches missed.">        if (!StringUtils.isEmpty(attributesFile)) {</span>
+<span class="nc" id="L277">            getLog().debug(&quot;Using attributes-file &quot;</span>
+                + attributesFile);
+<span class="nc" id="L279">            generator.setAttributes(new File(attributesFile));</span>
+        }
+<span class="pc bpc" id="L281" title="1 of 2 branches missed.">        if (hideGeneratedBy) {</span>
+<span class="nc" id="L282">            getLog().debug(&quot;Hiding 'generated-by' message.&quot;);</span>
+<span class="nc" id="L283">            generator.setHideGeneratedBy(true);</span>
+        }
+
+        // TODO add support for quiet-flag
+
+<span class="fc" id="L288">        final List&lt;String&gt; taglibs = scanForTaglibs(</span>
+            srcDirectory, includes, excludes);
+<span class="fc" id="L290">        getLog().debug(&quot;Found taglibs: &quot; + taglibs);</span>
+<span class="pc bpc" id="L291" title="1 of 2 branches missed.">        for (String taglib : taglibs) {</span>
+<span class="nc" id="L292">            generator.addTaglib(new File(srcDirectory, taglib));</span>
+<span class="nc" id="L293">        }</span>
+
+<span class="fc" id="L295">        generator.generate();</span>
+<span class="fc" id="L296">    }</span>
+
+    private List&lt;String&gt; scanForTaglibs(final File basedir,
+        final List&lt;String&gt; includeList, final List&lt;String&gt; excludeList)
+    {
+<span class="fc" id="L301">        List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="pc bpc" id="L302" title="3 of 4 branches missed.">        if (basedir != null &amp;&amp; basedir.exists()) {</span>
+<span class="nc" id="L303">            org.codehaus.plexus.util.DirectoryScanner scanner =</span>
+                new org.codehaus.plexus.util.DirectoryScanner();
+
+<span class="nc" id="L306">            scanner.setBasedir(basedir);</span>
+
+<span class="nc bnc" id="L308" title="All 2 branches missed.">            if (includeList != null) {</span>
+<span class="nc" id="L309">                scanner.setIncludes(processIncludesExcludes(includeList));</span>
+            }
+
+<span class="nc bnc" id="L312" title="All 2 branches missed.">            if (excludeList != null) {</span>
+<span class="nc" id="L313">                scanner.setExcludes(processIncludesExcludes(excludeList));</span>
+            }
+
+<span class="nc" id="L316">            scanner.scan();</span>
+<span class="nc" id="L317">            Collections.addAll(result, scanner.getIncludedFiles());</span>
+        }
+<span class="fc" id="L319">        return result;</span>
+    }
+
+    // based on maven-surefire-plugin's DirectoryScanner
+    private static String[] processIncludesExcludes(final List&lt;String&gt; list)
+    {
+<span class="nc" id="L325">        List&lt;String&gt; newList = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L326" title="All 2 branches missed.">        for (String aList : list) {</span>
+<span class="nc" id="L327">            String[] includes = aList.split(&quot;,&quot;);</span>
+<span class="nc" id="L328">            Collections.addAll(newList, includes);</span>
+<span class="nc" id="L329">        }</span>
+
+<span class="nc" id="L331">        String[] incs = new String[newList.size()];</span>
+<span class="nc bnc" id="L332" title="All 2 branches missed.">        for (int i = 0; i &lt; incs.length; i++) {</span>
+<span class="nc" id="L333">            incs[i] = newList.get(i);</span>
+        }
+
+<span class="nc" id="L336">        return incs;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
