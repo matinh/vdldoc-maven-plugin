@@ -1,6 +1,6 @@
 # Changelog
 
-* 2.1 (to be released)
+* 2.1 (Release on 2024-07-23)
   - Use JaCoCo instead of Cobertura for test-coverage report
   - Make build compatible with maven 3.9.2+ (#7)
   - Update Vdldoc dependency to 3.2 (#8)
