@@ -1,5 +1,8 @@
 # Changelog
 
+* next version
+  - Updated plexus-utils to 4.0.3 (@dependabot)
+  
 * 2.1 (Release on 2024-07-23)
   - Use JaCoCo instead of Cobertura for test-coverage report
   - Make build compatible with maven 3.9.2+ (#7)
