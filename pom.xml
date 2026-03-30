@@ -13,12 +13,12 @@
     and JSF (composite) components.
   </description>
 
-  <url>http://matinh.github.io/vdldoc-maven-plugin</url>
+  <url>https://matinh.github.io/vdldoc-maven-plugin</url>
 
   <licenses>
     <license>
       <name>The Apache Software License, Version 2.0</name>
-      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
       <distribution>repo</distribution>
     </license>
   </licenses>
@@ -55,11 +55,10 @@
       <subscribe>users-subscribe@maven.apache.org</subscribe>
       <unsubscribe>users-unsubscribe@maven.apache.org</unsubscribe>
       <post>users@maven.apache.org</post>
-      <archive>http://mail-archives.apache.org/mod_mbox/maven-users</archive>
+      <archive>https://mail-archives.apache.org/mod_mbox/maven-users</archive>
       <otherArchives>
-        <otherArchive>http://www.mail-archive.com/users@maven.apache.org/</otherArchive>
-        <otherArchive>http://maven.40175.n5.nabble.com/Maven-Users-f40176.html</otherArchive>
-        <otherArchive>http://maven-users.markmail.org/</otherArchive>
+        <otherArchive>https://www.mail-archive.com/users@maven.apache.org/</otherArchive>
+        <otherArchive>https://maven-users.markmail.org/</otherArchive>
       </otherArchives>
     </mailingList>
   </mailingLists>
