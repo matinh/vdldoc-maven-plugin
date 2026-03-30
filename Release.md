@@ -11,6 +11,7 @@
 * Update version information for development: `mvn versions:set -DnewVersion=1.1-SNAPSHOT`
 * Commit the changes in `pom.xml`: `git commit -a -m"prepare for SNAPSHOT development"`
 * push changes to github: `git push`
+* Create [GitHub release](https://github.com/matinh/vdldoc-maven-plugin/tags) from tag
 
 # Update the plugin's homepage
 
