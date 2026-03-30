@@ -16,6 +16,7 @@
 
 package com.github.matinh.vdldoc.maven.plugins;
 
+import org.apache.maven.doxia.sink.Sink;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Execute;
@@ -24,7 +25,6 @@ import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.reporting.MavenReport;
 import org.apache.maven.reporting.MavenReportException;
-import org.codehaus.doxia.sink.Sink;
 import org.codehaus.plexus.util.StringUtils;
 import org.omnifaces.vdldoc.VdldocGenerator;
 
@@ -184,8 +184,15 @@ public class Vdldoc
         }
     }
 
-    @SuppressWarnings("deprecation")
+    @Deprecated
     @Override
+    public void generate( org.codehaus.doxia.sink.Sink sink, Locale locale )
+        throws MavenReportException
+    {
+        generate( (Sink) sink, locale );
+    }
+
+    @SuppressWarnings("unused")
     public void generate(final Sink sink, final Locale locale)
         throws MavenReportException
     {
