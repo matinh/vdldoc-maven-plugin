@@ -1,6 +1,9 @@
 # Changelog
 
-* next version
+* 2.2 (Release on 2026-03-30)
+  - Converted build-process from findbugs to spotbugs (#6)
+  - Updated checkstyle configuration (#4)
+  - Updated maven-plugins and dependencies to recent versions
   - Updated plexus-utils to 4.0.3 (@dependabot)
   
 * 2.1 (Release on 2024-07-23)
