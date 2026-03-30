@@ -412,7 +412,7 @@
 
         <plugin>
           <artifactId>maven-pmd-plugin</artifactId>
-          <version>3.28.0</version>
+          <version>3.23.0</version>
           <configuration>
             <printFailingErrors>true</printFailingErrors>
             <excludeRoots>target</excludeRoots>
