@@ -1,7 +1,7 @@
 # How to perform a Release for the plugin
 
 * Run integration-tests with `mvn -Prun-its clean install`
-* Run quality-checks with `mvn -Pquality-checks clean install`
+* Run quality-checks with `mvn -Pquality-checks,reporting clean install`
 * Update version information with `mvn versions:set -DnewVersion=x.y`
 * Update `Changes.md` for release
 * Commit the changes: `git commit -a -m"prepare for x.y release"`

@@ -412,6 +412,7 @@
 
         <plugin>
           <artifactId>maven-pmd-plugin</artifactId>
+          <!-- newer versions require doxia-sitetools 2 (see also spotbugs)! -->
           <version>3.23.0</version>
           <configuration>
             <printFailingErrors>true</printFailingErrors>
@@ -441,14 +442,13 @@
         </plugin>
 
         <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>findbugs-maven-plugin</artifactId>
-          <version>3.0.5</version>
+          <groupId>com.github.spotbugs</groupId>
+          <artifactId>spotbugs-maven-plugin</artifactId>
+          <!-- newer versions require doxia-sitetools 2! (see also pmd) -->
+          <version>4.9.1.0</version>
           <configuration>
-            <!-- disable findbugs for now as it is obsolete and make problems in release-process -->
-            <skip>true</skip>
             <xmlOutput>true</xmlOutput>
-            <xmlOutputDirectory>${project.build.directory}/findbugs</xmlOutputDirectory>
+            <xmlOutputDirectory>${project.build.directory}/spotbugs</xmlOutputDirectory>
             <!--<excludeFilterFile>src/main/findbugs/excludes.xml</excludeFilterFile>-->
           </configuration>
           <executions>
@@ -631,8 +631,8 @@
           </plugin>
 
           <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>findbugs-maven-plugin</artifactId>
+            <groupId>com.github.spotbugs</groupId>
+            <artifactId>spotbugs-maven-plugin</artifactId>
           </plugin>
         </plugins>
       </build>
@@ -724,8 +724,8 @@
           </plugin>
 
           <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>findbugs-maven-plugin</artifactId>
+            <groupId>com.github.spotbugs</groupId>
+            <artifactId>spotbugs-maven-plugin</artifactId>
           </plugin>
 
           <plugin>
