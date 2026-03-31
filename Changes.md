@@ -1,6 +1,7 @@
 # Changelog
 
-* 2.2.1 (not yet released)
+* 2.2.1 (Release on 2026-03-3)
+  - Added more ITs
   - Fix binary compatibility issue with maven reporting API (#11 by @matinh)
 
 * 2.2 (Release on 2026-03-30)
