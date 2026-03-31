@@ -186,13 +186,24 @@ public class Vdldoc
 
     @Deprecated
     @Override
-    public void generate( org.codehaus.doxia.sink.Sink sink, Locale locale )
+    public void generate(final org.codehaus.doxia.sink.Sink sink, final Locale locale)
         throws MavenReportException
     {
-        generate( (Sink) sink, locale );
+        generate((Sink) sink, locale);
     }
 
-    @SuppressWarnings("unused")
+    /**
+     * Generate the actual report.
+     * <p>
+     * This method delegates to {@link #execute()} and generates the actual
+     * report. It is needed by the (new) maven reporting API.
+     * </p>
+     * @param sink currently ignored.
+     * @param locale currently ignored.
+     * @throws MavenReportException on any problem during report generation.
+     * @see #generate(org.codehaus.doxia.sink.Sink, Locale)
+     */
+    @SuppressWarnings({"unused", "deprecation"})
     public void generate(final Sink sink, final Locale locale)
         throws MavenReportException
     {
