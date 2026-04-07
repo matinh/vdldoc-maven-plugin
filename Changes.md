@@ -1,5 +1,9 @@
 # Changelog
 
+* 2.3 (to be released)
+  - Updated Vdldoc to 4.0 (#10 by @matinh)
+  - Require JDK 17 and Maven 3.9.0 as minimum versions
+
 * 2.2.1 (Release on 2026-03-3)
   - Added more ITs
   - Fix binary compatibility issue with maven reporting API (#11 by @matinh)
@@ -13,8 +17,8 @@
 * 2.1 (Release on 2024-07-23)
   - Use JaCoCo instead of Cobertura for test-coverage report
   - Make build compatible with maven 3.9.2+ (#7)
-  - Update Vdldoc dependency to 3.2 (#8)
-  - Update various maven plugins
+  - Updated Vdldoc dependency to 3.2 (#8)
+  - Updated various maven plugins
   - Updated JUnit dependency to 4.13.1
 
 * 2.0 (Release on 2020-08-03)
