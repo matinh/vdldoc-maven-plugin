@@ -73,16 +73,12 @@
       <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
     </repository>
     <site>
-      <!-- This is actually not used, as we use github's site-maven-plugin (see below). -->
+      <!-- This is actually not used, as we deploy manually. -->
       <name>GitHub Pages</name>
       <id>github</id>
       <url>https://matinh.github.io/vdldoc-maven-plugin/</url>
     </site>
   </distributionManagement>
-
-  <prerequisites>
-    <maven>3.9.0</maven>
-  </prerequisites>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -90,8 +86,22 @@
     <maven.compiler.release>17</maven.compiler.release>
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
+
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+    <!-- define some versions used multiple times throughout this pom -->
+    <version.maven.minimum>3.9.0</version.maven.minimum>
+    <version.java.minimum>17</version.java.minimum>
+    <version.maven-project-info-reports-plugin>3.6.1</version.maven-project-info-reports-plugin>
+    <version.maven-javadoc-plugin>3.12.0</version.maven-javadoc-plugin>
+    <version.maven-plugin-plugin>3.15.1</version.maven-plugin-plugin>
+    <version.maven-plugin-annotations>3.15.2</version.maven-plugin-annotations>
   </properties>
 
+  <prerequisites>
+    <maven>${version.maven.minimum}</maven>
+  </prerequisites>
 
   <dependencyManagement>
     <dependencies>
@@ -99,6 +109,12 @@
         <groupId>org.codehaus.plexus</groupId>
         <artifactId>plexus-utils</artifactId>
         <version>4.0.3</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.omnifaces</groupId>
+        <artifactId>vdldoc</artifactId>
+        <version>4.0</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -138,7 +154,7 @@
     <dependency>
       <groupId>org.apache.maven.plugin-tools</groupId>
       <artifactId>maven-plugin-annotations</artifactId>
-      <version>3.15.2</version>
+      <version>${version.maven-plugin-annotations}</version>
       <scope>provided</scope>
     </dependency>
 
@@ -150,7 +166,6 @@
     <dependency>
       <groupId>org.omnifaces</groupId>
       <artifactId>vdldoc</artifactId>
-      <version>4.0</version>
     </dependency>
 
     <!-- test-scoped dependencies -->
@@ -176,7 +191,6 @@
       <plugins>
 
         <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-enforcer-plugin</artifactId>
           <version>3.6.2</version>
         </plugin>
@@ -226,7 +240,17 @@
 
         <plugin>
           <artifactId>maven-project-info-reports-plugin</artifactId>
-          <version>3.6.1</version>
+          <version>${version.maven-project-info-reports-plugin}</version>
+        </plugin>
+
+        <plugin>
+          <artifactId>maven-site-plugin</artifactId>
+          <version>3.12.1</version>
+        </plugin>
+
+        <plugin>
+          <artifactId>maven-release-plugin</artifactId>
+          <version>3.3.1</version>
         </plugin>
 
         <plugin>
@@ -498,12 +522,12 @@
               <rules>
                 <requireJavaVersion>
                   <!-- Vdldoc 4.0 requires JDK 17 or newer -->
-                  <version>[17,)</version>
+                  <version>[${version.java.minimum},)</version>
                 </requireJavaVersion>
                 <requireMavenVersion>
                   <!-- According to https://maven.apache.org/developers/compatibility-plan.html
                        plugins should nowadays require Maven 3.9.x or newer. -->
-                  <version>[3.9.0,)</version>
+                  <version>[${version.maven.minimum},)</version>
                 </requireMavenVersion>
               </rules>
             </configuration>
@@ -513,10 +537,12 @@
       </plugin>
       <plugin>
         <artifactId>maven-plugin-plugin</artifactId>
-        <version>3.15.2</version>
+        <version>${version.maven-plugin-plugin}</version>
         <configuration>
           <goalPrefix>vdldoc</goalPrefix>
           <skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
+          <requiredMavenVersion>${version.maven.minimum}</requiredMavenVersion>
+          <requiredJavaVersion>${version.java.minimum}</requiredJavaVersion>
         </configuration>
         <executions>
           <execution>
@@ -571,9 +597,7 @@
       </plugin>
 
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-release-plugin</artifactId>
-        <version>3.3.1</version>
         <configuration>
           <useReleaseProfile>false</useReleaseProfile>
           <releaseProfiles>release</releaseProfiles>
@@ -596,9 +620,7 @@
       <plugin>
         <!-- skip the deployment via maven-site-plugin execution, as we
              deploy  manually. -->
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-site-plugin</artifactId>
-        <version>3.12.1</version>
         <configuration>
           <skipDeploy>true</skipDeploy>
         </configuration>
@@ -612,13 +634,13 @@
     <plugins>
       <plugin>
         <artifactId>maven-plugin-plugin</artifactId>
-        <version>3.15.2</version>
+        <version>${version.maven-plugin-plugin}</version>
       </plugin>
 
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-project-info-reports-plugin</artifactId>
-        <version>3.6.1</version>
+        <version>${version.maven-project-info-reports-plugin}</version>
       </plugin>
 
     </plugins>
@@ -670,7 +692,7 @@
 
           <plugin>
             <artifactId>maven-javadoc-plugin</artifactId>
-            <version>3.12.0</version>
+            <version>${version.maven-javadoc-plugin}</version>
             <reportSets>
               <reportSet>
                 <id>aggregate</id>
@@ -746,7 +768,6 @@
           </plugin>
 
           <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-pmd-plugin</artifactId>
           </plugin>
 
@@ -800,7 +821,6 @@
       <build>
         <plugins>
           <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-source-plugin</artifactId>
             <version>3.4.0</version>
             <executions>
@@ -814,9 +834,8 @@
           </plugin>
 
           <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-javadoc-plugin</artifactId>
-            <version>3.12.0</version>
+            <version>${version.maven-javadoc-plugin}</version>
             <executions>
               <execution>
                 <id>attach-javadocs</id>
@@ -828,7 +847,6 @@
           </plugin>
 
           <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-gpg-plugin</artifactId>
             <version>3.2.8</version>
             <executions>

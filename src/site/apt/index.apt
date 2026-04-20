@@ -8,13 +8,13 @@
 
 Vdldoc Maven Plugin
 
-  The Vdldoc Plugin uses Vdldoc to generate documentation for Facelet tags and
+  The <<<vdldoc-maven-plugin>>> uses Vdldoc to generate documentation for Facelet tags and
   JSF (composite) components. For further information about Vdldoc refer to
   {{{http://vdldoc.omnifaces.org/}OmniFaces Vdldoc}}.
 
 * Goals Overview
 
-  The Vdldoc Plugin has only one goal:
+  This Plugin has only one goal:
 
   * {{{./vdldoc-mojo.html}vdldoc:vdldoc}} generates the documentation for the JSF tags.
 
@@ -45,3 +45,13 @@ Vdldoc Maven Plugin
   * {{{./examples/includes-excludes-example.html}Specifying taglib files via includes and excludes}}
 
   * {{{./examples/css.html}Use custom CSS files for generated documentation}}
+
+* Requirements
+
+  Vdldoc 4.0 requires Java SE 17. Thus, <<<vdldoc-maven-plugin>>> starting from
+  2.3 on, also has Java SE 17 as a minimal requirement to run. This version also
+  requires Maven 3.9.x or newer. If you  are stuck with an older Java or Maven
+  version, use <<<vdldoc-maven-plugin>>> 2.2.1 which runs on Java 11 and Maven
+  3.6.3. See also the {{{./plugin-info.html}Plugin Info Report}} for further
+  information.
+
