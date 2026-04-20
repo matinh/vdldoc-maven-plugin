@@ -1,10 +1,10 @@
 # Changelog
 
-* 2.3 (to be released)
+* 2.3 (Release on 2026-04-20)
   - Updated Vdldoc to 4.0 (#10 by @matinh)
   - Require JDK 17 and Maven 3.9.0 as minimum versions
 
-* 2.2.1 (Release on 2026-03-3)
+* 2.2.1 (Release on 2026-03-31)
   - Added more ITs
   - Fix binary compatibility issue with maven reporting API (#11 by @matinh)
 
